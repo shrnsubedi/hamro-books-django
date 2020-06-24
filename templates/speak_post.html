@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load crispy_forms_tags %} {%block content%}
 
-<h1>New Speak Post for Ad</h1>
+<h3>Post Speak for Ad</h3>
 <form action="" method="POST">
   {% csrf_token %} {{form|crispy}}
   <button class="btn btn-success ml-2" type="submit">Save</button>

@@ -1,29 +1,97 @@
 {% extends 'base.html' %} {% block content %}
-<div class="card-columns text-center">
-  <!-- Cards obtained through database are generated here -->
-  {% for book in object_list %}
-  <div class="card">
-    <img
-      class="card-img-top"
-      src="{{book.imageURL}}"
-      width="200px"
-      height="300px"
-    />
-    <div class="card-body">
-      <h4 class="card-title">{{book.name}}</h4>
-      <h5 class="card-title text-muted">{{book.author}}</h5>
-    </div>
-    <p class="card-text">
-      Price: <span style="font-weight: bold;">{{book.price}}</span>
-    </p>
-    <hr />
-    <p>
-      <a
-        class="btn btn-success update-cart"
-        href="{% url 'book_detail' book.pk %}"
-        >View More</a
-      >
-    </p>
-  </div>
-  {% endfor %} {% endblock content %}
+{% load crispy_forms_tags %}
+<div class="filter-group">
+  <ul class="breadcrumb">
+    <li class="col-12">
+      <form action="{% url 'book_search'%}" method="GET">
+        <div class="form-row">
+          <div class="col-11">
+            <label for="inlineFormInputName2">Search for: </label>
+            <input
+              type="text"
+              class="form-control"
+              id="inlineFormInputName2"
+              name='search'
+              placeholder="Book Name"
+            />
+          </div>
+          <div class="col search-btn">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </li>
+  </ul>
 </div>
+<div class="row">
+
+  <div class="col-4">
+    <ul class="list-group">
+      <li class="list-group-item"><a class="genre-item" href="{% url 'book_list' %}">All</a></li>
+      <li class="list-group-item"><a class="genre-item" href="{% url 'book_filter' genre='Fiction' %}">Fiction</li>
+      <li class="list-group-item"><a class="genre-item" href="{% url 'book_filter' genre='Non-fiction' %}">Non-Fiction</a></li>
+      <li class="list-group-item">Biography</li>
+      <li class="list-group-item">Science-fiction</li>
+      <li class="list-group-item">History</li>
+    </ul>
+  </div>
+  
+  <div class="col-8">
+    <div class="card-columns text-center">
+      <!-- Cards obtained through database are generated here -->
+      {% if object_list %}
+      {% for book in object_list %}
+      <div class="card">
+        <img
+          class="card-img-top"
+          src="{{book.imageURL}}"
+          width="200px"
+          height="300px"
+        />
+        <div class="card-body">
+          <h4 class="card-title">{{book.name}}</h4>
+          <h5 class="card-title text-muted">{{book.author}}</h5>
+        </div>
+        <p class="card-text">
+          Rs.<span style="font-weight: bold;">{{book.price}}</span>
+        </p>
+        <p class="card-text text-muted">
+          (<span style="font-weight: light;">{{book.book_condition}}</span>)
+        </p>
+        <hr />
+        <p>
+          <a
+            class="btn btn-success update-cart"
+            href="{% url 'book_detail' book.pk %}"
+            >View More</a
+          >
+        </p>
+      </div>
+      {% endfor %}        
+      {% endif %}
+    </div>
+
+            {% block pagination %}
+                {% if is_paginated %}
+                    <div class="pagination">
+                        <span class="page-links">
+                            {% if page_obj.has_previous %}
+                                <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% endif %}
+                            <span class="page-current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+                            {% if page_obj.has_next %}
+                                <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                {% endif %}
+      {% endblock pagination %} 
+{% endblock content %}
+    </div>
+  </div>
+</div>
+
+
+

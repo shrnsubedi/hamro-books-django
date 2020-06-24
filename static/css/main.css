@@ -1,3 +1,16 @@
-.banner{
+.banner {
   margin-top: 10px;
+}
+
+.filter-group {
+  margin-top: 10px;
+}
+
+.search-btn .btn {
+  margin-top: 35px;
+}
+
+.genre-item{
+  text-decoration: none;
+  color: black;
 }

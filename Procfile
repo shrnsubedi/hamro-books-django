@@ -1,0 +1,1 @@
+web: gunicorn hamrobooks_project.wsgi --log-file -

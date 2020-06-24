@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load crispy_forms_tags %} {%block content%}
 
-<h1>New Book Ad</h1>
+<h1 class="display-4">New Book Ad</h1>
 <!--enctype="multipart/form-data" was needed to be added when using forms to upload image, else it showed no field -->
 <form action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %} {{form|crispy}}

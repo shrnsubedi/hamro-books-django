@@ -11,6 +11,9 @@ black = "*"
 django = "==3.0.1"
 django-crispy-forms = "==1.8.1"
 pillow = "*"
+gunicorn = "==19.9.0"
+whitenoise = "==4.1.4"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"

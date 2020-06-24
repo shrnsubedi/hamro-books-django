@@ -4,6 +4,7 @@ from django.urls import reverse
 # Create your models here.
 class CustomUser(AbstractUser):
   #validate the fields so that mobile numbers are in format
+  
   phone=models.PositiveIntegerField(null=True,blank=True)
   mobile_no=models.PositiveIntegerField(null=True,blank=False)
   address_1=models.CharField(max_length=50)

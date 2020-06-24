@@ -1,33 +1,88 @@
 {% extends 'base.html' %} {% block content %}
-<div class="article-entry">
-  <h2>{{object.name}}</h2>
-  <p>{{book.description}}</p>
-  <p>Author: {{book.author}}</p>
-  <p>ISBN: {{book.isbn}}</p>
-  <p>Published: {{book.published}}</p>
-  <p>Genre: {{book.genre}}</p>
+<div class="ad-entry">
+  <div class="card">
+      <div class="card-header">
+        <span style="font-weight: bold; font-size: larger;">{{object.name}}</span>
+      </div>
+      <div class="card-body">
+        <p class="card-text" style="text-align: justify;">{{book.description}}</p>
+        <div class="float-left">
+          <p>Author: {{book.author}}</p>
+          <p>ISBN: {{book.isbn}}</p>
+          <p>Published: {{book.published}}</p>
+          <p>Genre: {{book.genre}}</p>
+        </div>  
+        <div class="text-center">
+          <img
+          class="img-thumbnail"
+          src="{{book.imageURL}}"
+          width="200px"
+          height="200px"
+        />
+        </div>
+      </div>
+  </div>
   <hr />
-  <p style="font-weight: bold;">Book Ad Details</p>
-  <p>Ad ID: {{book.pk}}</p>
-  <p>Book Condition: {{book.book_condition}}</p>
-  <p>Posted Date: {{book.date}}</p>
-  <p>Posted by: {{book.posted}}</p>
-  <p>Price: <span style="font-weight: bold;">{{book.price}}</span></p>
+
+  <div class="card">
+    <div class="card-header">
+      <span style="font-weight: bold; font-size: larger;">Ad Details</span>
+    </div>
+    <div class="card-body">
+      <div class="float-left">
+        <p>Ad ID: {{book.pk}}</p>
+        <p>Book Condition: {{book.book_condition}}</p>
+        <p>Posted Date: {{book.date}}</p>
+        <p>Price: <span style="font-weight: bold;">{{book.price}}</span></p>
+      </div>  
+    </div>
+  </div>
+  <hr />
+
+  <div class="card">
+    <div class="card-header">
+      <span style="font-weight: bold; font-size: larger;">Seller Details</span>
+    </div>
+    <div class="card-body">
+      <div class="float-left">
+        <p>Posted by: {{book.posted}}</p>
+        <p>Mobile no: {{book.posted.mobile_no}}</p>
+        <p>Email address: {{book.posted.email}}</p>
+      </div>  
+    </div>
+    {% if user.is_authenticated %}
+    {% comment %} if the current session user is equal to the posted user display edit links {% endcomment %}
+      {%ifequal book.posted user%}
+    <div class="card-footer">
+        <a class="btn btn-warning" href="{% url 'book_edit' book.pk%}">Edit</a> |
+        <a class="btn btn-danger" href="{% url 'book_delete' book.pk%}">Delete</a>
+    </div>
+      {% endifequal %}
+    {% endif %}
+  </div>
+  <hr>
 </div>
-<p>
-  <a href="{% url 'book_edit' book.pk %}">Edit</a> |
-  <a href="{% url 'book_delete' book.pk %}">Delete</a>
-</p>
-<div>
-  <h4 style="font-weight: bold;">Speaks Posted about the book:</h4>
-  {% for speak in book.speaks.all %}
-  <p>
-    <span class="font-weight-bold">{{speak.posted}} &middot;</span>
-    {{speak}}
-  </p>
-  {% endfor %}
+
+<div class="card">
+  <div class="card-header">
+    <span style="font-weight: bold; font-size: larger;">Speaks Posted about the book:</span>
+  </div>
+
+  <div class="card-body">
+      {% for speak in book.speaks.all %}
+      <p>
+        <span class="font-weight-bold">{{speak.posted}} &middot;</span>
+        {{speak}} || <a href="#">Reply</a>
+      </p>
+      {% empty %}
+        <p style="font-style: italic;" >There are no speaks for the ad currently</p>
+      {% endfor %}
+  </div>
+
+  <div class="card-footer">
+    <p><a href="{% url 'speak_post' book.pk %}">Post your Speak</a></p>
+  </div>
 </div>
-<p><a href="{% url 'speak_post' book.pk %}">Post your Speak</a></p>
-<p>Back to <a href="{% url 'book_list' %}">All Books</a></p>
+<p><a class="float-right" href="{% url 'book_list' %}">Go back</a></p>
 
 {% endblock content %}
