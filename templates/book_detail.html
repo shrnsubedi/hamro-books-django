@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+<div class="article-entry">
+  <h2>{{object.name}}</h2>
+  <p>{{book.description}}</p>
+  <p>Author: {{book.author}}</p>
+  <p>ISBN: {{book.isbn}}</p>
+  <p>Published: {{book.published}}</p>
+  <p>Genre: {{book.genre}}</p>
+  <hr />
+  <p style="font-weight: bold;">Book Ad Details</p>
+  <p>Ad ID: {{book.pk}}</p>
+  <p>Book Condition: {{book.book_condition}}</p>
+  <p>Posted Date: {{book.date}}</p>
+  <p>Posted by: {{book.posted}}</p>
+  <p>Price: <span style="font-weight: bold;">{{book.price}}</span></p>
+</div>
+<p>
+  <a href="{% url 'book_edit' book.pk %}">Edit</a> |
+  <a href="{% url 'book_delete' book.pk %}">Delete</a>
+</p>
+<div>
+  <h4 style="font-weight: bold;">Speaks Posted about the book:</h4>
+  {% for speak in book.speaks.all %}
+  <p>
+    <span class="font-weight-bold">{{speak.posted}} &middot;</span>
+    {{speak}}
+  </p>
+  {% endfor %}
+</div>
+<p><a href="{% url 'speak_post' book.pk %}">Post your Speak</a></p>
+<p>Back to <a href="{% url 'book_list' %}">All Books</a></p>
+
+{% endblock content %}

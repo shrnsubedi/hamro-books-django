@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Edit Ad</h1>
+<form action="" method="POST">
+  {% csrf_token %} {{form.as_p}}
+  <button class="btn btn-info ml-2" type="submit">Update</button>
+  <a class="btn btn-info ml-2" href="{% url 'book_list' %}">Cancel</a>
+</form>
+{% endblock content %}

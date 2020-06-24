@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+<div class="card-columns text-center">
+  <!-- Cards obtained through database are generated here -->
+  {% for book in object_list %}
+  <div class="card">
+    <img
+      class="card-img-top"
+      src="{{book.imageURL}}"
+      width="200px"
+      height="300px"
+    />
+    <div class="card-body">
+      <h4 class="card-title">{{book.name}}</h4>
+      <h5 class="card-title text-muted">{{book.author}}</h5>
+    </div>
+    <p class="card-text">
+      Price: <span style="font-weight: bold;">{{book.price}}</span>
+    </p>
+    <hr />
+    <p>
+      <a
+        class="btn btn-success update-cart"
+        href="{% url 'book_detail' book.pk %}"
+        >View More</a
+      >
+    </p>
+  </div>
+  {% endfor %} {% endblock content %}
+</div>
